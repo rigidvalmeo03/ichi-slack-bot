@@ -17,12 +17,15 @@ app.command("/ichi-slack-bot-ping",async({ command, ack, respond}) => {
     const start = Date.now();
     await ack();
     const latency = Date.now() - start;
-    await respond({ text: `Pong!\nLatency: ${latency}ms`});
+    await respond({ 
+        response_type: "in_channel",
+        text: `Pong!\nLatency: ${latency}ms`});
 });
 
 app.command("/ichi-slack-bot-help", async ({ ack, respond}) => {
     await ack();
     await respond({
+        response_type: "in_channel",
         text:
         `Available Commands:
         /ichi-slack-bot-ping Check bot latency
@@ -48,6 +51,7 @@ app.command("/ichi-slack-bot-catchem", async ({ ack, respond}) => {
 
         const data = response.data.PropertyTable.Properties[0];
         await respond ({
+            response_type: "in_channel",
             text:
            `*Cat Chemistry*
             
@@ -61,6 +65,7 @@ app.command("/ichi-slack-bot-catchem", async ({ ack, respond}) => {
 } catch (error) { console.error(error);
 
     await respond ({
+        response_type: "in_channel",
         text: "Sorry, I could not get the cat chemistry data from PubChem."
     });
     }
@@ -79,6 +84,7 @@ app.command("/ichi-slack-bot-dogchem", async ({ ack, respond }) => {
         const data = response.data.PropertyTable.Properties[0];
         
         await respond({
+            response_type: "in_channel",
             text:
             `*Dog Chemistry*
 
@@ -93,6 +99,7 @@ app.command("/ichi-slack-bot-dogchem", async ({ ack, respond }) => {
         console.error(error);
 
         await respond ({
+            response_type: "in_channel",
             text: "Sorry, I could not get the dog chemistry data from Pubchem."
         });
     }
@@ -109,6 +116,7 @@ app.command("/ichi-slack-bot-dogbreed", async ({ ack, respond}) => {
         const breed = randomBreed.attributes;
         
         await respond({
+            response_type: "in_channel",
             text:
            ` *Dog Breed*
 
@@ -125,6 +133,7 @@ app.command("/ichi-slack-bot-dogbreed", async ({ ack, respond}) => {
         console.error(error);
 
         await respond({
+            response_type: "in_channel",
             text: "Sorry, I could not get the dog breed data."
         });
     }
@@ -141,6 +150,7 @@ app.command("/ichi-slack-bot-catbreed", async  ({ack, respond}) => {
         const randomBreed = breeds [Math.floor(Math.random() * breeds.length)];
 
         await respond({
+            response_type: "in_channel",
             text:
             `*Cat Breed*
 
@@ -157,6 +167,7 @@ app.command("/ichi-slack-bot-catbreed", async  ({ack, respond}) => {
         console.error(error);
 
         await respond ({
+            response_type: "in_channel",
             text: "Sorry, I could not get the cat breed data."
         });
     }
@@ -175,6 +186,7 @@ app.command("/ichi-slack-bot-dogscanteat", async ({ ack, respond}) => {
         const data = response.data;
         
         await respond({
+            response_type: "in_channel",
             text:
             `*Dog Food Safety*
 
@@ -190,6 +202,7 @@ app.command("/ichi-slack-bot-dogscanteat", async ({ ack, respond}) => {
         console.error(error);
 
         await respond({
+            response_type: "in_channel",
             text: "Sorry, I could not get the dog food safety information."
         });
     }
@@ -201,6 +214,7 @@ app.command("/ichi-slack-bot-feeding", async ({ ack, respond, command, client}) 
 
     if (!/^\d{2}:\d{2}$/.test(time)) {
         await respond ({
+            response_type: "in_channel",
             text:"Please enter the time in 24-hour format. \nExample: `/ichi-slack-bot-feeding 18:00`"
         });
         return; }
@@ -208,11 +222,13 @@ app.command("/ichi-slack-bot-feeding", async ({ ack, respond, command, client}) 
     const [hour, minute] = time.split(":").map(Number);
     if (hour > 23 || minute > 59) {
         await respond({
+            response_type: "in_channel",
             text: "That does not look like valid time. Please use a time between 00:00 and 23:59."
         });
         return;
     }
     await respond({
+        response_type: "in_channel",
         text: `Feeding reminder set for *${time}* every day!` });
     cron.schedule(`${minute} ${hour} * * *`, async () => {
         try {
