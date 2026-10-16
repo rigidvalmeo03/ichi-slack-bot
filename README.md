@@ -62,11 +62,11 @@ Additional information
 
 Command: /ichi-slack-bot-dogscanteat
 
-8. Feeding Reminders - The Feeding Reminder command allows users to set a daily feeding reminder for their pets. The user enters a time using the 24-hour format. The bot then sends a message in the same Slack channel every day at that time.
-Example: /ichi-slack-bot-feeding 18:00
-The bot will respond that the feeding reminder has been set and will send a reminder saying:
+8. Feeding Reminders - The Feeding Reminder command allows users to set a daily feeding reminder for their pets. Users enter a time using the 24-hour format and specify an IANA timezone. The bot then sends a message in the same Slack channel every day at the specified time and timezone.
+The reminder message says:
 "Feeding Time!
 Don't forget to feed your pets!"
+Example command: `/ichi-slack-bot-feeding 18:00 Asia/Manila`
 
 >Technologies Used
 
@@ -74,7 +74,7 @@ Don't forget to feed your pets!"
 2. Node.js - Used to run the JavaScript code.
 3. Slack Bolt - Used to connect the JavaScript program to Slack and create Slack commands.
 4. Axios - Used to send requests to external APIs and retrieve information.
-5. Node-cron - Used to schedule the daily feeding reminders.
+5. Node-cron - Used to schedule the daily feeding reminders according to the user's specified time and timezone.
 6. dotenv - Used to load the Slack bot and app tokens from the .env file.
 7. APIs:
 a. PubChem - Used for the chemistry information in the Cat Chemistry and Dog Chemistry commands.
@@ -111,15 +111,16 @@ Use “/ichi-slack-bot-help“ to see the available commands.
 
 -The chemistry and breed commands automatically retrieve information from their respective APIs.
 
--The feeding command requires a time in 24-hour format.
-Example: /ichi-slack-bot-feeding 18:00
-The bot will then send a feeding reminder every day at 18:00 in the Slack channel where the reminder was created.
+- The feeding command requires a time in 24-hour format and an IANA timezone.
+Example: `/ichi-slack-bot-feeding 18:00 Asia/Manila`
+The bot will confirm the schedule and send a feeding reminder every day at 18:00 in the specified timezone, in the Slack channel where the command was used. Make sure the bot has been added to that channel so it can send messages.
 
 >What I Learned
 -Through this project, I learned how to create a Slack bot using JavaScript and Slack Bolt.
 -I also learned how to use APIs to retrieve information instead of storing all of the information directly in the code.
 -This project helped me practice JavaScript, asynchronous functions, API requests, random selections, error handling, environment variables, Slack commands, and scheduled tasks.
 -I also learned how different APIs can be combined to create one project with multiple features.
+- I also learned how to schedule timezone-aware daily reminders, troubleshoot Slack channel permissions, and deploy and test my bot on a remote server using Hack Club Nest.
 
 >About Me
 -Hi! I'm Ichi, also known as Rigid Valmeo.
